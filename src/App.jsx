@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {flushSync} from 'react-dom';
 import site from './content.js';
+import {Count, Cycle, Marquee, Stats, Words} from './Flow.jsx';
 import {BUDGETS, INTERESTS, NEEDS, aggregates, products} from './data.js';
 import {K, classify, recommend, suppress} from './engine.js';
 import {ACROSS, SERVICES, STAGES, WHY} from './aws.js';
@@ -62,6 +63,10 @@ function Discover({compact}) {
   );
 }
 
+const CYCLE = ["wellness retailers", "wellness brands", "specialised marketplaces"];
+const MQ = ["Wellness retailers", "Wellness brands", "Specialised marketplaces", "Anonymous preferences", "Explained recommendations", "Catalogue classification", "Education first", "Aggregate analytics", "Small-count suppression", "Adults only", "Ecommerce APIs", "Minimal data"];
+const STATS = [[15, "products in the fictional catalogue"], [13, "attributes read from each description"], [0, "personal fields stored per shopper"], [5, "smallest count ever shown in a report"]];
+
 function Hero() {
   return (
     <section className="hero">
@@ -70,6 +75,7 @@ function Hero() {
         <p className="eyebrow" data-r>Personalisation for adult wellness retail</p>
         <h1 data-r><span className="l1">Personalized discovery.</span>{' '}<em className="l2">Private by design.</em></h1>
         <p className="lede" data-r style={{'--d': '160ms'}}>IntimaSense is a proposed platform that helps sexual wellness retailers and brands organise their catalogues and recommend the right products and educational resources — from product attributes and preferences shoppers choose to share, and nothing more.</p>
+        <p className="fcy" data-r style={{'--d': '200ms'}}><Cycle lead="Built for" items={CYCLE} /></p>
         <div className="cta" data-r style={{'--d': '240ms'}}><a className="btn" href="#demo" data-magnetic data-cursor="Book">Request a demo</a><a className="btn ghost" href="#discovery">Try it below</a></div>
       </div>
       <p className="adult" data-r style={{'--d': '320ms'}}>For businesses serving consenting adults, 18+. Non-explicit by design.</p>
@@ -202,8 +208,7 @@ function Technology() {
 }
 
 function Team() {
-  const p = site.team[0];
-  return <section className="sec" id="team" aria-labelledby="team-title"><div className="team glass" data-r><span className="av" aria-hidden="true">{p.initials}</span><div><p className="eyebrow">Founder</p><h2 id="team-title">{p.name}</h2><p>{p.bio}</p><ul className="tags">{p.focus.map((f) => <li key={f}>{f}</li>)}</ul></div></div></section>;
+  return <section className="sec" id="team" aria-labelledby="team-title"><div className="team-head"><p className="eyebrow">Founding team</p><h2 id="team-title">The people building {site.name}.</h2></div><div className="team-list">{site.team.map((p, i) => (<div key={p.name} style={{'--d': `${i * 90}ms`}} className="team glass" data-r><span className="av" aria-hidden="true">{p.initials}</span><div><p className="eyebrow">{p.role}</p><h3 className="tname">{p.name}</h3><p>{p.bio}</p><ul className="tags">{p.focus.map((f) => <li key={f}>{f}</li>)}</ul></div></div>))}</div></section>;
 }
 
 function Demo() {
@@ -239,7 +244,7 @@ function Footer() {
   );
 }
 
-function Home() { return (<><Hero /><Discovery /><PrivacyModel /><Features /><Classify /><Analytics /><Who /><Pricing /><Technology /><Team /><Demo /><Faq /><Contact /></>); }
+function Home() { return (<><Hero /><Marquee items={MQ} label="Who and what it is built for" /><Stats items={STATS} /><Discovery /><PrivacyModel /><Features /><Classify /><Analytics /><Who /><Pricing /><Technology /><Team /><Demo /><Faq /><Contact /></>); }
 
 const LEGAL = {
   privacy: ['Privacy notice', [['This website', 'IntimaSense is a proposed product. This website and the discovery studio run in your browser on fictional data.'], ['Preferences', 'Preferences you choose in the previews are held in memory for the page and are never sent anywhere. The studio keeps only catalogue review changes in your browser’s local storage (key intimasense-studio-v1).'], ['Forms', `Until a form service is connected, the demo and contact forms open a pre-filled email to ${site.email}; nothing is sent until you send it.`], ['Cookies & analytics', 'None.']]],
